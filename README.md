@@ -173,55 +173,6 @@ http://localhost:5000/api
 
 ---
 
-## Swagger Integration
-
-The API is fully documented using Swagger UI. Follow these steps to explore the documentation:
-
-1. **Navigate to Swagger Documentation**:
-   Open your browser and go to [http://localhost:5000/api-docs](http://localhost:5000/api-docs).
-
-2. **Interactive Interface**:
-   Use Swagger UI to test the endpoints directly by providing inputs and viewing responses.
-
-### Swagger Example Configuration
-
-The Swagger configuration is located in `swaggerDef.js` and `components.yml`.
-
-- **`swaggerDef.js`**:
-  This file initializes Swagger with basic information and points to the YAML file for detailed API definitions.
-
-  ```js
-  const swaggerJsdoc = require("swagger-jsdoc");
-  const path = require("path");
-
-  const options = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "Users API",
-        version: "1.0.0",
-        description:
-          "A RESTful API for managing users with CRUD and advanced filtering capabilities.",
-      },
-      servers: [
-        {
-          url: "http://localhost:5000",
-          description: "Local server",
-        },
-      ],
-    },
-    apis: [path.join(__dirname, "components.yml")],
-  };
-
-  const swaggerSpec = swaggerJsdoc(options);
-  module.exports = swaggerSpec;
-  ```
-
-- **`components.yml`**:
-  This YAML file defines the API endpoints, parameters, and schemas. See the code in the previous steps for a full example.
-
----
-
 ## Testing
 
 ### Postman

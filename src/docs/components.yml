@@ -1,0 +1,157 @@
+openapi: 3.0.0
+info:
+  title: Users API
+  version: 1.0.0
+  description: A RESTful API for managing users with CRUD and advanced filtering capabilities.
+servers:
+  - url: http://localhost:5000
+    description: Local server
+paths:
+  /api/users:
+    get:
+      summary: Retrieve all users
+      description: Retrieve all users with optional filters for group, name, and email.
+      parameters:
+        - in: query
+          name: group
+          schema:
+            type: string
+          description: Filter by group. Comma-separated values are allowed.
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Filter by name (partial match).
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: Filter by email (partial match).
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Server error.
+    post:
+      summary: Create a new user
+      description: Create a new user with a name, email, and groups.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "201":
+          description: The created user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Bad request.
+  /api/users/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The user ID.
+      responses:
+        "200":
+          description: A single user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found.
+    put:
+      summary: Update a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The user ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: The updated user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found.
+    delete:
+      summary: Delete a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The user ID.
+      responses:
+        "200":
+          description: User deleted successfully.
+        "404":
+          description: User not found.
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "607d1b2f9f1b2c0015b3e4d8"
+        name:
+          type: string
+          example: "Alice"
+        email:
+          type: string
+          example: "alice@example.com"
+        groups:
+          type: array
+          items:
+            type: string
+          example: ["admin", "editor"]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Alice"
+        email:
+          type: string
+          example: "alice@example.com"
+        groups:
+          type: array
+          items:
+            type: string
+          example: ["admin", "editor"]
+      required:
+        - name
+        - email
