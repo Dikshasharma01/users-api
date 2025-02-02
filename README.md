@@ -19,7 +19,7 @@ A RESTful API for managing users with CRUD operations and advanced filtering, bu
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/users-api.git
+git clone https://github.com/Dikshasharma01/users-api.git
 cd users-api
 ```
 
